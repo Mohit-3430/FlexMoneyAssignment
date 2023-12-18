@@ -73,7 +73,6 @@ button:focus-visible {
   text-align: center;
 }
 
-
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -97,8 +96,6 @@ button:focus-visible {
 .read-the-docs {
   color: #888;
 }
-
-
 
 @media (prefers-color-scheme: light) {
   :root {

@@ -42,15 +42,39 @@ router.post('/register', async (req, res) => {
 
 router.post('/check-user', async (req, res) => {
     const { email } = req.body;
-    const user = await db.user.findUnique({
-        where: {
-            email: email,
-        },
-    });
-    if (user) {
-        return res.status(200).json({ status: true, msg: "User Exists" })
+    if (!email) {
+        return res.status(400).json({ status: false, msg: "Invalid Email" })
     }
-    return res.status(400).json({ status: false, msg: "User Does not exists" })
+    try {
+        const user = await db.user.findUnique({
+            where: {
+                email: email,
+            },
+        });
+        if (user) {
+            return res.status(200).json({ status: true, msg: "User Exists", user: user })
+        }
+    }
+    catch (err) {
+        return res.status(400).json({ status: false, msg: "User Does not exists" })
+    }
+})
+
+router.post('/sub-data', async (req, res) => {
+    const { subId } = req.body
+    try {
+        const sub = await db.subscription.findUnique({
+            where: {
+                id: subId
+            }
+        })
+        if (sub) {
+            return res.status(200).json({ status: true, msg: "Subscirption created", sub: sub })
+        }
+    }
+    catch (err) {
+        return res.status(400).json({ status: false, msg: "Subscription Does not exists" })
+    }
 })
 
 export default router;
