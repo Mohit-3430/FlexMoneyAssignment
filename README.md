@@ -47,6 +47,30 @@ ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_id_fkey" FOREIGN KEY ("i
 **NOTE:** Simple guide to the project and APIs is provided below (expand the dropdowns)
 
 <details>
+<summary>Tech Stack</summary>
+
+### Frontend
+
+- **React** has been used configured with [Vite](https://vitejs.dev/), which provids both developer experience and user satisfaction with faster and optimal loads
+- Normal CSS has been used
+
+### Backend
+
+- **Node JS and Express JS**: NodeJS is used as runtime configured with the web application framework ExpressJS.
+
+### Database
+
+- **PostgreSQL**: PostgreSQL instance on cloud provider [supbase](supabase) was used,
+
+### Deployment:
+
+- Paas cloud platforms were used
+
+1. Frontend : [Netlify](https://www.netlify.com/)
+2. Backend : [koyeb](https://www.koyeb.com/)
+</details>
+
+<details>
 <summary>Flow</summary>
 
 1. Users registers for the first time with basic information. All the basic validation checks have been made as mentioned in the requirements.
