@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
     res.send("Hello From Server!!")
 })
 
-import UserRoutes from "./src/routes/register.js"
+import UserRoutes from "./src/routes/routes.js"
 
 app.use('/api/', UserRoutes)
 
