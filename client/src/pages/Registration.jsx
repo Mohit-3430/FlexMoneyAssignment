@@ -21,7 +21,7 @@ const Registration = () => {
   const register = async (e) => {
     e.preventDefault();
     const age_num = parseInt(age)
-    if (age_num <= 18 || age_num >= 56) {
+    if (age_num <= 18 || age_num >= 65) {
       toast.error("You must be between 18-56", {
         autoClose: 2000,
         transition: Slide,
