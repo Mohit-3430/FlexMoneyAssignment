@@ -15,6 +15,8 @@ Backend:
 
 ### SQL queries used:
 
+- Databse ER diagram has been added to this repo (ER.png)
+
 (Part of Migration)
 
 ```
@@ -42,6 +44,8 @@ ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_id_fkey" FOREIGN KEY ("i
 
 ## Simple Documentation
 
+**NOTE:** Simple guide to the project and APIs is provided below (expand the dropdowns)
+
 <details>
 <summary>Flow</summary>
 
@@ -62,7 +66,9 @@ Register User
 Registers a new user with the provided information.
 
 URL : /register
+
 Method : POST
+
 Request : Body
 
 | Field | Type   | Description                 |
@@ -73,6 +79,7 @@ Request : Body
 | batch | string | User's batch (subscription) |
 
 Status Code: 201 Created
+
 Error Code: 401
 
 ### Check User
@@ -81,13 +88,17 @@ Register User
 Checks if a user with the provided email exists.
 
 URL : /check-user
+
 Method : POST
+
 Request : Body
-| Field | Type | Description |
-|--------|--------|------------------------------|
+
+| Field | Type   | Description          |
+| ----- | ------ | -------------------- |
 | email | string | User's email address |
 
 Success Code : 200 OK
+
 Error Code : 400 Bad Request
 
 ### Subscription Data
@@ -95,13 +106,17 @@ Error Code : 400 Bad Request
 Retrieves subscription data based on the provided subscription ID.
 
 URL : /sub-data
+
 Method : POST
+
 Request : Body
-| Field | Type | Description |
-|--------|--------|------------------------------|
+
+| Field | Type   | Description     |
+| ----- | ------ | --------------- |
 | subId | string | Subscription ID |
 
 Success Code: 200 OK
+
 Error Code : 400 Bad Request
 
 ### Expiry
@@ -109,7 +124,9 @@ Error Code : 400 Bad Request
 Updates the status of a subscription to mark it as expired based on the provided subscription ID.
 
 URL : /sub-expiry
+
 Method : POST
+
 Request : Body
 
 | Field | Type   | Description     |
@@ -117,6 +134,7 @@ Request : Body
 | subId | string | Subscription ID |
 
 Success Code : 200 OK
+
 Error Code : 400 Bad Request
 
 </details>
