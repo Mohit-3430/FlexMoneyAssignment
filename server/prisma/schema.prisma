@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Name of Enum cannot start with Number
+enum Batch {
+  S_6_7_AM
+  S_7_8_AM
+  S_8_9_AM
+  S_5_6_PM
+}
+
+model User {
+  id             String        @id @default(uuid())
+  email          String        @unique
+  name           String
+  age            Int
+  // this means only this instance have a one-one correspondance
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId String        @unique
+
+  @@index([email])
+}
+
+model Subscription {
+  id        String    @id @default(uuid())
+  status    Boolean   @default(false)
+  batch     Batch
+  last_paid DateTime?
+
+  User User?
+}
