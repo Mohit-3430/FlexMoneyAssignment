@@ -77,4 +77,24 @@ router.post('/sub-data', async (req, res) => {
     }
 })
 
+router.patch('/sub-edit', async (req, res) => {
+    const { subId, batch } = req.body;
+    try {
+        const sub = await db.subscription.update({
+            where: {
+                id: subId
+            },
+            data: {
+                status: true,
+                batch: batch,
+                last_paid: new Date()
+            }
+        })
+        return res.status(200).json({ status: true, msg: "Subscirption updated", sub: sub })
+    } catch (err) {
+        console.log(err)
+        return res.status(400).json({ status: false, msg: "Update Failed" })
+    }
+})
+
 export default router;
