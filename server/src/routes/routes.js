@@ -42,9 +42,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/check-user', async (req, res) => {
     const { email } = req.body;
-    if (!email) {
-        return res.status(400).json({ status: false, msg: "Invalid Email" })
-    }
+    console.log(email)
     try {
         const user = await db.user.findUnique({
             where: {
@@ -54,6 +52,7 @@ router.post('/check-user', async (req, res) => {
         if (user) {
             return res.status(200).json({ status: true, msg: "User Exists", user: user })
         }
+        return res.status(400).json({ status: false, msg: "User Does not exists" })
     }
     catch (err) {
         return res.status(400).json({ status: false, msg: "User Does not exists" })
