@@ -20,7 +20,15 @@ router.post('/register', async (req, res) => {
                 email: email,
                 name: name,
                 age: i_age,
+                subscription: {
+                    create: {
+                        batch: batch
+                    }
+                },
             },
+            include: {
+                subscription: true
+            }
 
         });
         res.status(201).json({ status: true, msg: "Registration successful", user: user });
@@ -31,4 +39,18 @@ router.post('/register', async (req, res) => {
     }
 
 })
+
+router.post('/check-user', async (req, res) => {
+    const { email } = req.body;
+    const user = await db.user.findUnique({
+        where: {
+            email: email,
+        },
+    });
+    if (user) {
+        return res.status(200).json({ status: true, msg: "User Exists" })
+    }
+    return res.status(400).json({ status: false, msg: "User Does not exists" })
+})
+
 export default router;

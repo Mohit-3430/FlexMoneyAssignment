@@ -20,7 +20,6 @@ const Registration = () => {
 
   const register = async (e) => {
     e.preventDefault();
-    console.log(name, email, age, batch)
     const age_num = parseInt(age)
     if (age_num <= 18 || age_num >= 56) {
       toast.error("You must be between 18-56", {
@@ -30,7 +29,6 @@ const Registration = () => {
     }
     else {
       const res = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/register`, { name, email, age, batch });
-      console.log(res.status);
       if (res.status === 201) {
         toast.success("Registration Completed!", {
           autoClose: 1500,
