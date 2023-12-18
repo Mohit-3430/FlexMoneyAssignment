@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { checkExpiry, convert } from "../utils/utils"
 import { MdOutlineDone } from "react-icons/md";
+import Nav from "../components/Nav";
 
 const Payment = () => {
     const [subid, setSubid] = useState("")
@@ -67,6 +68,7 @@ const Payment = () => {
 
     return (
         <>
+            <Nav />
             <h2>Payment Details</h2>
             <div><u>User Details</u></div>
             <div className="data">

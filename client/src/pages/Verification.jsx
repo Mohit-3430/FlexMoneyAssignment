@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast, Slide } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
+import Nav from "../components/Nav"
 
 const Verification = () => {
   const navigate = useNavigate()
@@ -45,6 +46,7 @@ const Verification = () => {
   }
   return (
     <>
+      <Nav />
       <h1>Join a Bacth</h1>
       <div><u>Enter your details:</u></div>
       <br />

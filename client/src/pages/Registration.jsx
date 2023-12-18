@@ -2,6 +2,7 @@ import { useState } from "react"
 import { ToastContainer, toast, Flip, Slide } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import Nav from "../components/Nav"
 
 import axios from "axios"
 
@@ -55,6 +56,7 @@ const Registration = () => {
 
   return (
     <>
+      <Nav />
       <h1>Yoga Batch Registration</h1>
 
       <form onSubmit={register}>
