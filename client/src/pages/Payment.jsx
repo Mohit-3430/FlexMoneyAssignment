@@ -3,11 +3,10 @@ import { useParams } from "react-router-dom"
 import axios from "axios"
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { convert } from "../utils/utils"
+import { checkExpiry, convert } from "../utils/utils"
 import { MdOutlineDone } from "react-icons/md";
 
 const Payment = () => {
-    // console.log(email)
     const [subid, setSubid] = useState("")
     const [name, setName] = useState("")
     const [age, setAge] = useState("")
@@ -15,6 +14,7 @@ const Payment = () => {
     const [status, setStatus] = useState("No")
     const [lastPaid, setLastPaid] = useState("")
     const { subId, emailId } = useParams();
+    const [currld, setCurrLd] = useState("NA")
 
     const batchEnum = {
         "S_6_7_AM": "6-7AM",
@@ -27,37 +27,43 @@ const Payment = () => {
             autoClose: 1500
         })
 
-        // update data
-
-        const { data } = await axios.patch(`${import.meta.env.VITE_SERVER_URL}/api/sub-edit`, { subId, batch });
-        console.log(data)
+        const resp = await axios.patch(`${import.meta.env.VITE_SERVER_URL}/api/sub-edit`, { subId, batch, status: true });
+        setStatus(resp.data.status)
         setTimeout(() => {
             toast.success("Payment Successful")
         }, 2000)
     }
 
     useEffect(() => {
-        const fetchSubData = async () => {
+        const fetch = async () => {
             const { data } = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/sub-data`, { subId })
+            localStorage.setItem("last_paid", data.sub.last_paid)
             if (data.sub.status === false) setStatus("No")
             else setStatus("Active")
-            if (data.sub.lastPaid === "") setLastPaid("NA")
+            if (data.sub.lastPaid === undefined) setLastPaid("NA")
             else setLastPaid(data.sub.last_paid)
             setBatch(data.sub.batch)
-        }
-        const fetchUData = async () => {
-            const { data } = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/check-user`, { email: emailId })
-            if (data.status === true) {
-                setName(data.user.name)
-                setAge(data.user.age)
+
+            //
+            const resp = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/check-user`, { email: emailId })
+            if (resp.data.status === true) {
+                setName(resp.data.user.name)
+                setAge(resp.data.user.age)
             }
+            // 
+            const expire_check = checkExpiry(localStorage.getItem("last_paid"))
+            console.log(expire_check)
+            if (status === "Active")
+                setCurrLd(convert(localStorage.getItem("last_paid")))
+
+            if (expire_check !== "Active") {
+                await axios.patch(`${import.meta.env.VITE_SERVER_URL}/api/sub-expiry`, { subId });
+            }
+
         }
-        fetchSubData()
-        fetchUData()
+        fetch()
+
     }, [status])
-
-    let lastPaidDate = convert(new Date(lastPaid))
-
 
     return (
         <>
@@ -69,7 +75,7 @@ const Payment = () => {
                 <p>Age : {age}</p>
                 {status === "Active" && (<p style={{ color: "#008000" }}>Status: {status} <MdOutlineDone /></p>)}
                 {status === "No" && (<p style={{ color: "red" }}>Status: {status}</p>)}
-                <p>LastPaid: {lastPaidDate}</p>
+                <p>LastPaid: {currld}</p>
                 <p>Batch: {batchEnum[batch]}</p>
             </div >
             {status === "No" && (
@@ -91,5 +97,6 @@ const Payment = () => {
         </>
     )
 }
+
 
 export default Payment

@@ -5,9 +5,9 @@ const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-    <div>Welcome to the Yoga Classes online portal:</div>
-    <button onClick={() => navigate("/register")}>New User Register</button>
-    <button onClick={() => navigate("/verify")}>Returning user Visit Portal</button>
+      <div>Welcome to the Yoga Classes online portal:</div>
+      <button onClick={() => navigate("/register")}>New User Registeration</button>
+      <button onClick={() => navigate("/verify")}>Returning user Portal</button>
     </>
   )
 }

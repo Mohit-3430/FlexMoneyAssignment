@@ -36,7 +36,7 @@ const Registration = () => {
         })
         setTimeout(() => {
           navigate('/verify')
-        }, 3000)
+        }, 1500)
       }
       else if (res.status === 200) {
         toast.warn("User already exists", {

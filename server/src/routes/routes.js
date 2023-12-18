@@ -34,7 +34,6 @@ router.post('/register', async (req, res) => {
         res.status(201).json({ status: true, msg: "Registration successful", user: user });
     }
     catch (exp) {
-        console.log(exp)
         res.status(401).json({ status: false, msg: "In process" });
     }
 
@@ -42,7 +41,6 @@ router.post('/register', async (req, res) => {
 
 router.post('/check-user', async (req, res) => {
     const { email } = req.body;
-    console.log(email)
     try {
         const user = await db.user.findUnique({
             where: {
@@ -70,6 +68,7 @@ router.post('/sub-data', async (req, res) => {
         if (sub) {
             return res.status(200).json({ status: true, msg: "Subscirption created", sub: sub })
         }
+        return res.status(400).json({ status: true, msg: "Subscirption Problem" })
     }
     catch (err) {
         return res.status(400).json({ status: false, msg: "Subscription Does not exists" })
@@ -91,7 +90,23 @@ router.patch('/sub-edit', async (req, res) => {
         })
         return res.status(200).json({ status: true, msg: "Subscirption updated", sub: sub })
     } catch (err) {
-        console.log(err)
+        return res.status(400).json({ status: false, msg: "Update Failed" })
+    }
+})
+
+router.patch('/sub-expiry', async (req, res) => {
+    const { subId } = req.body;
+    try {
+        const sub = await db.subscription.update({
+            where: {
+                id: subId
+            },
+            data: {
+                status: false,
+            }
+        })
+        return res.status(200).json({ status: true, msg: "Subscirption updated", sub: sub })
+    } catch (err) {
         return res.status(400).json({ status: false, msg: "Update Failed" })
     }
 })
