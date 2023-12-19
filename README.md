@@ -162,3 +162,25 @@ Success Code : 200 OK
 Error Code : 400 Bad Request
 
 </details>
+
+<details>
+<summary>Docker</summary>
+
+Have containarized the application to make it compatible to develop and deploy
+
+- Both the frontend and the backend have been containerised
+- The individual docker files are present in the directories name `Dockerfile`
+- environment variables have been used to build the images and not used during the compose procedure.
+- Finally the whole setup has been made for using multi-container setup with ease.
+
+Steps to reproduce:
+
+- After cloning the repo add the `.env` files in the both directories
+  - for client side add `VITE_SERVER_URL`
+  - for server side add `DATABASE_URL`
+- Build the images using `docker build` command
+- `docker-compose.yml` is the compose file
+  - Use `docker-compose build` (if images are not there)
+  - Use `docker-compose up` to run the services
+
+</details>
